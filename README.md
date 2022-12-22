@@ -14,3 +14,5 @@ This is a simple project to get country details from a country name or country c
 Refer [https://localhost:8000/docs](https://localhost:8000/docs) for API documentation.
 
 ## Testing
+
+Run `docker-compose --env-file .env run --rm app pytest` to run the tests.
