@@ -2,17 +2,16 @@ import pytest
 
 from app.db.models import User
 
-@pytest.fixture(scope="session")
-def create_user(tmpdir):
+@pytest.fixture(scope="session", autouse=True)
+def create_user():
   """Create a user for the tests."""
   from .db_test import override_get_db
   database = next(override_get_db())
-  new_user = User()
+  new_user = User(username="test", password="test")
   database.add(new_user)
   database.commit()
   database.refresh(new_user)
-  print("User created")
   yield
   ## Clean up
-  # database.query(User).filter_by(username="test").delete()
-  # database.commit()
+  database.query(User).filter_by(username="test").delete()
+  database.commit()
